@@ -11,7 +11,7 @@ public class Player2D : Character2D//, IDamagable, IHealable, IScoreable
     [SerializeField] FloatVariable healthVar;
     //[SerializeField] Weapon2D weapon;
 
-    [SerializeField, Range(0, 20)] float jump = 12;
+    [SerializeField, Range(0, 100)] float jump = 12;
 
     private void Update()
     {

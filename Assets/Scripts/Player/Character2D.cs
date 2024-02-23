@@ -14,8 +14,8 @@ public class Character2D : MonoBehaviour
     [SerializeField] protected SpriteRenderer spriteRenderer;
     [SerializeField] protected Animator animator;
 
-    [SerializeField, Range(0, 10)] protected float speed = 5;
-    [SerializeField, Range(0, 80)] protected float gravity = 60;
+    [SerializeField, Range(0, 100)] protected float speed = 5;
+    [SerializeField, Range(0, 1000)] protected float gravity = 60;
     [SerializeField] protected float health = 100;
     [SerializeField] protected eFace spriteFacing = eFace.Right;
 
