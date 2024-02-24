@@ -140,9 +140,9 @@ GameObject:
   - component: {fileID: 4611290887809732787}
   - component: {fileID: 6624520726546734735}
   - component: {fileID: 7131274767520531707}
+  - component: {fileID: 4157516960813165032}
   - component: {fileID: 1314029943479863339}
   - component: {fileID: 6661522649883398055}
-  - component: {fileID: 4157516960813165032}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -333,6 +333,23 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   radius: 40.9
+--- !u!114 &4157516960813165032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4163012139823060825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd45f7bd64bb5a040979eed0ea301d22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagName: Player
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  radius: 3
 --- !u!212 &1314029943479863339
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -406,20 +423,3 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4157516960813165032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4163012139823060825}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd45f7bd64bb5a040979eed0ea301d22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tagName: Player
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  radius: 3

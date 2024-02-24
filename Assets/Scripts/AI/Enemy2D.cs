@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy2D : Character2D//, IDamagable
@@ -52,8 +50,7 @@ public class Enemy2D : Character2D//, IDamagable
         ShootTimer -= Time.deltaTime;
 
         var MeleeSensed = MeleePerception.GetSensedGameObjects();
-        enemy = (MeleeSensed.Length > 0) ? MeleeSensed[0] : enemy;
-        
+        enemy = (MeleeSensed.Length > 0) ? MeleeSensed[0] : enemy;        
 
         switch (state)
         {
@@ -73,12 +70,13 @@ public class Enemy2D : Character2D//, IDamagable
             case eState.Chase:
                 if (enemy == null)
                 {
-                    timer = 2;
+                    timer = 0;
                     state = eState.Idle;
                 }
                 break;
             case eState.Attack:
-                state = eState.Patrol;
+                timer = 1;
+                state = eState.Idle;
                 break;
             case eState.Death:
                 animator.SetBool("Death", true);
@@ -101,6 +99,8 @@ public class Enemy2D : Character2D//, IDamagable
         {
             movement.x = (transform.position.x < enemy.transform.position.x) ? speed : -speed;
             movement.y = (transform.position.y < enemy.transform.position.y) ? speed : -speed;
+            movement.x += Random.value > 0.5 ? Random.value * 20 : -(Random.value * 20);
+            movement.y += Random.value > 0.5 ? Random.value * 20 : -(Random.value * 20);
             if ((Mathf.Abs(transform.position.x - enemy.transform.position.x) < attackRange) && (Mathf.Abs(transform.position.y - enemy.transform.position.y) < attackRange))
             {
                 state = eState.Attack;
@@ -125,7 +125,7 @@ public class Enemy2D : Character2D//, IDamagable
     {
         if (state != eState.Death)
         {
-            state = eState.Chase;
+            //state = eState.Chase;
         }
     }
 
@@ -149,6 +149,6 @@ public class Enemy2D : Character2D//, IDamagable
         
         var clone = Instantiate(ProjectilePrefab, LaunchOffset.position, transform.rotation);
 
-        clone.GetComponent<Rigidbody2D>().velocity = (GameObject.Find("Player").transform.position - transform.position).normalized * speed * 2;
+        clone.GetComponent<Rigidbody2D>().velocity = (GameObject.Find("Player").transform.position - transform.position).normalized * speed * 1.3f;
     }
 }
