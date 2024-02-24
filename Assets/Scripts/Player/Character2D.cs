@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController2D))]
-public class Character2D : MonoBehaviour
+public class Character2D : MonoBehaviour, IDamagable
 {
     public enum eFace
     {
@@ -52,4 +52,10 @@ public class Character2D : MonoBehaviour
             spriteRenderer.flipX = !(spriteFacing == eFace.Right);
         }
     }
+
+	public virtual void ApplyDamage(float damage)
+	{
+		health -= damage;
+        Debug.Log("generic hit");
+	}
 }
