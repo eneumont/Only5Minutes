@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Squishable2D : MonoBehaviour
 {
-    [SerializeField] float damage = 100000000;
+    [SerializeField] float damage = 100;
     //[SerializeField] Character2D subject;
     [SerializeField] bool damageOverTime = true;
     [SerializeField] float maximumSquishAngle = 45;
