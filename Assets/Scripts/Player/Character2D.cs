@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController2D))]
@@ -18,6 +19,7 @@ public class Character2D : MonoBehaviour, IDamagable
     [SerializeField, Range(0, 1000)] protected float gravity = 60;
     [SerializeField] protected float health = 100;
     [SerializeField] protected eFace spriteFacing = eFace.Right;
+    [SerializeField] protected bool CanFly;
 
     protected CharacterController2D characterController;
 
@@ -35,7 +37,10 @@ public class Character2D : MonoBehaviour, IDamagable
     {
         // vertical movement (gravity)
         movement.y -= gravity * Time.fixedDeltaTime;
-        movement.y = Mathf.Max(movement.y, -gravity * Time.fixedDeltaTime * 3);
+        if (!CanFly)
+        {
+            movement.y = Mathf.Max(movement.y, -gravity * Time.fixedDeltaTime * 3);
+        }
 
         characterController.Move(movement * Time.fixedDeltaTime);
         UpdateFacing();
