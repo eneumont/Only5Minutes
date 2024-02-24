@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class Mover : MonoBehaviour
 {
-    [SerializeField] private Vector3 startPosition;
-    [SerializeField] private Vector3 endPosition;
+    [SerializeField] private Transform startPosition;
+    [SerializeField] private Transform endPosition;
     [SerializeField] float rate = 1f;
     [SerializeField] private bool resetUponArrival = false;
     [SerializeField] VoidEvent[] resetEvents;
@@ -15,6 +15,8 @@ public class Mover : MonoBehaviour
     [SerializeField] VoidEvent[] startEvents;
     [SerializeField] bool startAutomatically = true;
     [NonSerialized] public bool going;
+    [SerializeField] bool startOnContact = true;
+    [SerializeField] bool reverseUponArrival = false;
 
     // Start is called before the first frame update
     void Start()
@@ -42,27 +44,57 @@ public class Mover : MonoBehaviour
         }
 		if (startPosition == null)
         {
-            startPosition = transform.position;
+            startPosition = transform;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
+	}
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (startOnContact)
+		{
+			StartMover();
+		}
+	}
+	private void OnCollisionEnter(Collision collision)
+	{
+		if (startOnContact)
+		{
+			StartMover();
+		}
+	}
+	// Update is called once per frame
+	void Update()
     {
         if (going)
         {
-            transform.position += (endPosition - transform.position).normalized * rate * Time.deltaTime;
-            if (Vector3.Distance(transform.position, endPosition) < rate * 0.1)
+            if (gameObject.TryGetComponent(out Rigidbody2D body2D))
             {
-                arrivedEvent?.RaiseEvent();
-                going = false;
+                body2D.velocity = (endPosition.position - transform.position).normalized * rate;
+            }
+            else if (gameObject.TryGetComponent(out Rigidbody body))
+            {
+                body.velocity = (endPosition.position - transform.position).normalized * rate;
+            }
+            else
+            {
+                transform.position += (endPosition.position - transform.position).normalized * rate * Time.deltaTime;
+            }
+            if (Vector3.Distance(transform.position, endPosition.position) < rate * 0.1)
+			{
+				if (reverseUponArrival)
+				{
+                    Vector3 destination = transform.position;
+                    transform.position = endPosition.position;
+                    endPosition.position = destination;
+				}
+				arrivedEvent?.RaiseEvent();
+                going = startAutomatically && resetUponArrival;
             }
         }
     }
 
 	private void ResetMover()
 	{
-        transform.position = startPosition;
+        transform.position = startPosition.position;
         going = startAutomatically;
 	}
     private void StartMover()
