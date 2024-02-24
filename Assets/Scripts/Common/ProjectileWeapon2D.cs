@@ -2,57 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileWeapon2D : Weapon2D
+public class ProjectileWeapon2D : MonoBehaviour
 {
-    [SerializeField] Transform attackLeftTransform;
-    [SerializeField] Transform attackRightTransform;
-    [SerializeField, Range(0, 5)] float attackRadius = 1;
+    [SerializeField] float speed = 1f;
+    [SerializeField] float damage = 10f;
+    [SerializeField] FloatVariable health;
+    public GameObject Target;
 
-    public override bool Use(Animator animator)
+    public void Update()
     {
-        bool used = false;
-        if (ready)
+        //Vector2.MoveTowards(this.transform.position, Target.transform.position, speed);
+        //transform.position += transform.right * Time.deltaTime * speed; 
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
         {
-            if (animator != null && animationTriggerName != "")
-            {
-                animator.SetTrigger(animationTriggerName);
-                ready = false;
-                StartCoroutine(ResetAttackReadyCR(attackRate));
-
-                used = true;
-            }
+            health.value -= damage;
         }
-
-        return used;
-    }
-
-    public override void Attack(eDirection direction)
-    {
-        Vector3 position = (direction == eDirection.Right) ? attackRightTransform.position : attackLeftTransform.position;
-
-        var colliders = Physics2D.OverlapCircleAll(position, attackRadius, layerMask);
-       // var colliders = Physics2D.
-        foreach (var collider in colliders)
-        {
-            if ((tagName == "" || collider.gameObject.CompareTag(tagName)) && collider.gameObject.TryGetComponent(out IDamagable damagable))
-            {
-                damagable.ApplyDamage(damage);
-            }
-        }
-    }
-
-
-    IEnumerator ResetAttackReadyCR(float time)
-    {
-        yield return new WaitForSeconds(time);
-        ready = true;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackLeftTransform.position, attackRadius);
-        Gizmos.DrawWireSphere(attackRightTransform.position, attackRadius);
+        Destroy(gameObject);
     }
 
 }
