@@ -84,7 +84,7 @@ public class Enemy2D : Character2D//, IDamagable
                 break;
         }
 
-        animator.SetFloat("speed", speed);
+        animator.SetFloat("Speed", speed);
     }
 
     protected override void FixedUpdate()
