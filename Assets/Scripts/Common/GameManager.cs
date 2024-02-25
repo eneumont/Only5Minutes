@@ -62,10 +62,10 @@ public class GameManager : Singleton<GameManager> {
 				break;
 		}
 
-		//UIManager.Instance.Health = health;
-		//UIManager.Instance.Timer = timer;
-		//UIManager.Instance.Score = score;
-		//UIManager.Instance.Lives = lives;
+		UIManager.Instance.Health = health;
+		UIManager.Instance.Timer = timer;
+		UIManager.Instance.Score = score;
+		UIManager.Instance.Lives = lives;
 	}
 
 	public void OnStartGame() {
