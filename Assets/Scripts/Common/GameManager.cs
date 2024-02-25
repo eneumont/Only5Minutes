@@ -38,6 +38,13 @@ public class GameManager : Singleton<GameManager> {
 	}
 
 	void Update() {
+
+		timer.value -= Time.deltaTime;
+
+		if(timer.value <= 0 || lives.value <= 0)
+		{
+			Application.Quit();
+		}
 		switch (state) {
 			case State.TITLE:
 				UIManager.Instance.SetActive("Title", true);
@@ -81,7 +88,8 @@ public class GameManager : Singleton<GameManager> {
 
 				UIManager.Instance.SetActive("Play", true);
 				// game timer
-				timer.value = timer - Time.deltaTime;
+				timer.value -= Time.deltaTime;
+				print(timer.value);
 				score.value += (int)Time.deltaTime;
 				if (timer <= 0 || lives.value <= 0) {
 					state = State.GAME_OVER;
@@ -139,6 +147,6 @@ public class GameManager : Singleton<GameManager> {
 
 	public void Respawn() { 
 		player.transform.position = respawn.transform.position;
-		timer.value -= 50;
+		timer.value = 300;
 	}
 }

@@ -150,6 +150,6 @@ public class Enemy2D : Character2D//, IDamagable
         
         var clone = Instantiate(ProjectilePrefab, LaunchOffset.position, transform.rotation);
 
-        clone.GetComponent<Rigidbody2D>().velocity = (GameObject.Find("Player").transform.position - transform.position).normalized * speed * 1.3f;
+        clone.GetComponent<Rigidbody2D>().velocity = (GameObject.Find("NewPlayer").transform.position - transform.position).normalized * speed * 1.3f;
     }
 }
