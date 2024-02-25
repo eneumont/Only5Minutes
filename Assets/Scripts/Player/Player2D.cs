@@ -8,13 +8,13 @@ using UnityEngine.UIElements.Experimental;
 public class Player2D : Character2D, IDamagable//, IHealable, IScoreable
 {
     [SerializeField] IntVariable score;
+    [SerializeField] IntVariable lives;
     [SerializeField] FloatVariable healthVar;
     //[SerializeField] Weapon2D weapon;
 
     [SerializeField, Range(0, 100)] float jump = 12;
 
-    private void Update()
-    {
+    private void Update() {
         if (characterController.onGround && Input.GetButtonDown("Jump"))
         {
             movement.y = jump;
