@@ -40,7 +40,9 @@ public class GameManager : Singleton<GameManager> {
 	void Update() {
 		switch (state) {
 			case State.TITLE:
-				UIManager.Instance.SetActive("Title", true);
+				UIManager.Instance.SetActive("gameover", false);
+				UIManager.Instance.SetActive("gamewon", false);
+				UIManager.Instance.SetActive("title", true);
 				Cursor.lockState = CursorLockMode.None;
 				Cursor.visible = true;
 				if (!titleMusic.isPlaying) {
@@ -50,9 +52,12 @@ public class GameManager : Singleton<GameManager> {
 					winMusic.Stop();
 					loseMusic.Stop();
 				}
+				mover.SetActive(false);
+				player.SetActive(false);
+				boss.SetActive(false);
 				break;
 			case State.START_GAME:
-				UIManager.Instance.SetActive("Title", false);
+				UIManager.Instance.SetActive("title", false);
 				Cursor.lockState = CursorLockMode.Locked;
 				Cursor.visible = false;
 
@@ -79,11 +84,14 @@ public class GameManager : Singleton<GameManager> {
 					loseMusic.Stop();
 				}
 
-				UIManager.Instance.SetActive("Play", true);
+				UIManager.Instance.SetActive("play", true);
 				// game timer
 				timer.value = timer - Time.deltaTime;
 				score.value += (int)Time.deltaTime;
-				if (timer <= 0 || lives.value <= 0) {
+				if (timer <= 0) {
+					state = State.GAME_WON;
+				}
+				if (lives.value <= 0) {
 					state = State.GAME_OVER;
 				}
 				break;
@@ -91,8 +99,8 @@ public class GameManager : Singleton<GameManager> {
 				mover.SetActive(false);
 				player.SetActive(false);
 				boss.SetActive(false);
-				UIManager.Instance.SetActive("Play", false);
-				UIManager.Instance.SetActive("GameOver", true);
+				UIManager.Instance.SetActive("play", false);
+				UIManager.Instance.SetActive("gameover", true);
 				Cursor.lockState = CursorLockMode.None;
 				Cursor.visible = true;
 				if (!loseMusic.isPlaying) {
@@ -107,8 +115,8 @@ public class GameManager : Singleton<GameManager> {
 				mover.SetActive(false);
 				player.SetActive(false);
 				boss.SetActive(false);
-				UIManager.Instance.SetActive("Play", false);
-				UIManager.Instance.SetActive("GameWon", true);
+				UIManager.Instance.SetActive("play", false);
+				UIManager.Instance.SetActive("gamewon", true);
 				Cursor.lockState = CursorLockMode.None;
 				Cursor.visible = true;
 				if (!winMusic.isPlaying) {
