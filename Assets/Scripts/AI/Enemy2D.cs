@@ -109,6 +109,7 @@ public class Enemy2D : Character2D//, IDamagable
             }
             else if (ProjectilePerception.GetSensedGameObjects() != null && ShootTimer <= 0)
             {
+                animator.SetTrigger("Shoot");
                 ShootTimer = ShootCooldown;
                 Shoot();
             }
