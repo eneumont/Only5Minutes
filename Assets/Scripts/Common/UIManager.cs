@@ -18,6 +18,8 @@ public class UIManager : Singleton<UIManager> {
 	[SerializeField] TMP_Text timerUI;
 	[SerializeField] TMP_Text backlivesUI;
 	[SerializeField] TMP_Text backscoreUI;
+	[SerializeField] TMP_Text endscoreUI;
+	[SerializeField] TMP_Text backendscoreUI;
 	[SerializeField] TMP_Text backtimerUI;
 	[SerializeField] Slider healthUI;
 
@@ -25,19 +27,21 @@ public class UIManager : Singleton<UIManager> {
 
 	public int Lives {
 		set	{ livesUI.text = "LIVES: " + value.ToString();
-			backlivesUI.text = "LIVES: " + value.ToString();
+			backlivesUI.text = livesUI.text;
 		}
 	}
 
 	public float Timer {
 		set	{ timerUI.text = string.Format("{0:F1}", value);
-			backtimerUI.text = string.Format("{0:F1}", value);
+			backtimerUI.text = timerUI.text;
 		}
 	}
 
 	public int Score {
 		set { scoreUI.text = string.Format("{0:D1}", value);
-			backscoreUI.text = string.Format("{0:D1}", value);
+			backscoreUI.text = scoreUI.text;
+			endscoreUI.text = "Your score was...\n" + value;
+			backendscoreUI.text = endscoreUI.text;
 		}
 	}
 
