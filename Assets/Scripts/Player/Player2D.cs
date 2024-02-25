@@ -10,6 +10,7 @@ public class Player2D : Character2D, IDamagable//, IHealable, IScoreable
     [SerializeField] IntVariable score;
     [SerializeField] IntVariable lives;
     [SerializeField] FloatVariable healthVar;
+    [SerializeField] VoidEvent respawnEvent;
     //[SerializeField] Weapon2D weapon;
 
     [SerializeField, Range(0, 100)] float jump = 12;
@@ -18,6 +19,12 @@ public class Player2D : Character2D, IDamagable//, IHealable, IScoreable
         if (characterController.onGround && Input.GetButtonDown("Jump"))
         {
             movement.y = jump;
+        }
+
+        if (healthVar.value <= 0) {
+            lives.value -= 1;
+            healthVar.value = 100;
+            respawnEvent.RaiseEvent();
         }
         animator.SetBool("OnGround", characterController.onGround);
 
@@ -57,5 +64,6 @@ public class Player2D : Character2D, IDamagable//, IHealable, IScoreable
     public void AddScore(int score)
     {
         this.score.value += score;
+        print("player score: " + score);
     }
 }

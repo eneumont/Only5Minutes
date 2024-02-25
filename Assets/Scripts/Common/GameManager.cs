@@ -11,10 +11,13 @@ public class GameManager : Singleton<GameManager> {
 	[SerializeField] FloatVariable timer;
 
 	[SerializeField] GameObject respawn;
+	[SerializeField] GameObject player;
+	[SerializeField] GameObject boss;
+	[SerializeField] GameObject mover;
 
 	[Header("Events")]
 	[SerializeField] VoidEvent gameStartEvent;
-	[SerializeField] GameObjectEvent respawnEvent;
+	[SerializeField] VoidEvent respawnEvent;
 
 	public enum State {
 		TITLE,
@@ -25,6 +28,10 @@ public class GameManager : Singleton<GameManager> {
 	}
 	private State state = State.TITLE;
 
+	public void OnEnable() {
+		respawnEvent.Subscribe(Respawn);
+	}
+
 	void Update() {
 		switch (state) {
 			case State.TITLE:
@@ -32,19 +39,22 @@ public class GameManager : Singleton<GameManager> {
 				Cursor.lockState = CursorLockMode.None;
 				Cursor.visible = true;
 				break;
-
 			case State.START_GAME:
 				UIManager.Instance.SetActive("Title", false);
 				Cursor.lockState = CursorLockMode.Locked;
 				Cursor.visible = false;
 
 				// reset values
-				timer.value = 60;
-				lives.value = 3;
+				timer.value = 300;
+				lives.value = 5;
 				health.value = 100;
+				score.value = 0;
+
+				mover.SetActive(true);
+				player.SetActive(true);
+				boss.SetActive(true);
 
 				gameStartEvent.RaiseEvent();
-				respawnEvent.RaiseEvent(respawn);
 
 				state = State.PLAY_GAME;
 				break;
@@ -52,13 +62,28 @@ public class GameManager : Singleton<GameManager> {
 				UIManager.Instance.SetActive("Play", true);
 				// game timer
 				timer.value = timer - Time.deltaTime;
-				if (timer <= 0) {
+				score.value += (int)Time.deltaTime;
+				if (timer <= 0 || lives.value <= 0) {
 					state = State.GAME_OVER;
 				}
 				break;
 			case State.GAME_OVER:
+				mover.SetActive(false);
+				player.SetActive(false);
+				boss.SetActive(false);
+				UIManager.Instance.SetActive("Play", false);
+				UIManager.Instance.SetActive("GameOver", true);
+				Cursor.lockState = CursorLockMode.None;
+				Cursor.visible = true;
 				break;
 			case State.GAME_WON:
+				mover.SetActive(false);
+				player.SetActive(false);
+				boss.SetActive(false);
+				UIManager.Instance.SetActive("Play", false);
+				UIManager.Instance.SetActive("GameWon", true);
+				Cursor.lockState = CursorLockMode.None;
+				Cursor.visible = true;
 				break;
 			default:
 				break;
@@ -74,15 +99,12 @@ public class GameManager : Singleton<GameManager> {
 		state = State.START_GAME;
 	}
 
-	public void OnPlayerDead() {
-		state = State.START_GAME;
-	}
-
-	public void OnAddPoints(int points) {
-		print(points);
-	}
-
 	public void EndGame() { 
 		Application.Quit();
+	}
+
+	public void Respawn() { 
+		player.transform.position = respawn.transform.position;
+		timer.value -= 50;
 	}
 }
