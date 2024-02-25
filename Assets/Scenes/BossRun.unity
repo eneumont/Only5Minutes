@@ -18190,13 +18190,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screens:
-  - name: Title
+  - name: title
     go: {fileID: 1646186935}
-  - name: Play
+  - name: play
     go: {fileID: 772378532}
-  - name: GameOver
+  - name: gameover
     go: {fileID: 628755152}
-  - name: GameWon
+  - name: gamewon
     go: {fileID: 845731461}
   livesUI: {fileID: 992635286}
   scoreUI: {fileID: 978521529}
