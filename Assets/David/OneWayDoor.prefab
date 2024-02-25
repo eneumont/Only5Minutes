@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 852099775787766188}
   - component: {fileID: 3158219774457091851}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1063783023744039841}
   - component: {fileID: 6380328319608422433}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 6742985389539956862}
   - component: {fileID: 7462483183956783837}
   - component: {fileID: 6072075872632345476}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OneWayDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
