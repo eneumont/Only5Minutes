@@ -81,7 +81,8 @@ public class GameManager : Singleton<GameManager> {
 
 				UIManager.Instance.SetActive("Play", true);
 				// game timer
-				timer.value = timer - Time.deltaTime;
+				timer.value -= Time.deltaTime;
+				print(timer.value);
 				score.value += (int)Time.deltaTime;
 				if (timer <= 0 || lives.value <= 0) {
 					state = State.GAME_OVER;

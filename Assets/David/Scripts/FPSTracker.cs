@@ -27,7 +27,7 @@ public class FPSTracker : MonoBehaviour
         else
         {
             fps = (int)Mathf.Round((firstSecondFrames+secondSecondFrames+thirdSecondFrames+fourthSecondFrames+fifthSecondFrames)/5.0f);
-            Debug.Log(fps);
+            //Debug.Log(fps);
             fifthSecondFrames = fourthSecondFrames;
             fourthSecondFrames = thirdSecondFrames;
             thirdSecondFrames = secondSecondFrames;
