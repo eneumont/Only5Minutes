@@ -15,6 +15,11 @@ public class GameManager : Singleton<GameManager> {
 	[SerializeField] GameObject boss;
 	[SerializeField] GameObject mover;
 
+	[SerializeField] AudioSource titleMusic;
+	[SerializeField] AudioSource playMusic;
+	[SerializeField] AudioSource winMusic;
+	[SerializeField] AudioSource loseMusic;
+
 	[Header("Events")]
 	[SerializeField] VoidEvent gameStartEvent;
 	[SerializeField] VoidEvent respawnEvent;
@@ -38,6 +43,13 @@ public class GameManager : Singleton<GameManager> {
 				UIManager.Instance.SetActive("Title", true);
 				Cursor.lockState = CursorLockMode.None;
 				Cursor.visible = true;
+				if (!titleMusic.isPlaying) {
+					titleMusic.loop = true;
+					titleMusic.Play();
+					playMusic.Stop();
+					winMusic.Stop();
+					loseMusic.Stop();
+				}
 				break;
 			case State.START_GAME:
 				UIManager.Instance.SetActive("Title", false);
@@ -59,6 +71,14 @@ public class GameManager : Singleton<GameManager> {
 				state = State.PLAY_GAME;
 				break;
 			case State.PLAY_GAME:
+				if (!playMusic.isPlaying) {
+					playMusic.loop = true;
+					titleMusic.Stop();
+					playMusic.Play();
+					winMusic.Stop();
+					loseMusic.Stop();
+				}
+
 				UIManager.Instance.SetActive("Play", true);
 				// game timer
 				timer.value = timer - Time.deltaTime;
@@ -75,6 +95,13 @@ public class GameManager : Singleton<GameManager> {
 				UIManager.Instance.SetActive("GameOver", true);
 				Cursor.lockState = CursorLockMode.None;
 				Cursor.visible = true;
+				if (!loseMusic.isPlaying) {
+					loseMusic.loop = true;
+					titleMusic.Stop();
+					playMusic.Stop();
+					winMusic.Stop();
+					loseMusic.Play();
+				}
 				break;
 			case State.GAME_WON:
 				mover.SetActive(false);
@@ -84,6 +111,13 @@ public class GameManager : Singleton<GameManager> {
 				UIManager.Instance.SetActive("GameWon", true);
 				Cursor.lockState = CursorLockMode.None;
 				Cursor.visible = true;
+				if (!winMusic.isPlaying) {
+					winMusic.loop = true;
+					titleMusic.Stop();
+					playMusic.Stop();
+					winMusic.Play();
+					loseMusic.Stop();
+				}
 				break;
 			default:
 				break;
